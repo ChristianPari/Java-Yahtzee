@@ -54,7 +54,7 @@ public class Menu {
   }
 
   protected String getResponse() {
-    String response = scanner.next();
+    String response = scanner.nextLine();
     return response;
   }
 }

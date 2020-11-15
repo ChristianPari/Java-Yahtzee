@@ -4,11 +4,11 @@ import Yahtzee.Die.Die;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class Hand {
   public List<Die> availableDice = new ArrayList<>();
   public List<Integer> diceValues = new ArrayList<>();
-  public List<Die> heldDice = new ArrayList<>();
   public int turns = 0;
 
   public Hand(
@@ -31,20 +31,25 @@ public class Hand {
     turns++;
   }
 
-  public void reRoll(String dieNumbersString) {
+  public boolean reRoll(String dieNumbersString) {
     String[] dieNumbers = dieNumbersString.split(" ");
 
     for (String dieNumber : dieNumbers) {
-
-      for (int i = 1; i <= availableDice.size(); i++) {
-
-        if (i == Integer.parseInt(dieNumber)) {
-          int newDieValue = availableDice.get(i - 1).rollDie();
-          diceValues.set(i - 1, newDieValue);
-          turns++;
+      int intDieNumber = Integer.parseInt(dieNumber);
+      if (intDieNumber <= 6 & intDieNumber >= 1){
+        for (int i = 1; i <= availableDice.size(); i++) {
+          if (i == intDieNumber) {
+            int newDieValue = availableDice.get(i - 1).rollDie();
+            diceValues.set(i - 1, newDieValue);
+          }
         }
+      } else {
+        System.out.println("\nThe choices you entered were not recognized, please try again...");
+        return false;
       }
     }
+    turns++;
+    return true;
   }
 
 }

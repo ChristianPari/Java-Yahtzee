@@ -54,13 +54,19 @@ public class Yahtzee {
 
   private void userReRoll(Hand userHand) {
     Menu menu = new Menu();
-    System.out.println("\nPlease enter the die number(s) you wish to re-roll below...");
+    System.out.println("\nPlease enter the die number(s) you wish to re-roll..." +
+            "\nPlease enter Die Number similar to following example..." +
+            "\nExample: '1 2 3'");
     String choices = menu.getResponse();
     if (choices.isBlank()) {
       userReRoll(userHand);
     }
-    userHand.reRoll(choices);
-    action("turn", userHand);
+    boolean nextAction = userHand.reRoll(choices);
+
+    if (nextAction)
+      action("turn", userHand);
+    else
+      userReRoll(userHand);
   }
 
 }

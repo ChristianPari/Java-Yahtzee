@@ -21,8 +21,8 @@ public class Hand {
   }
 
   public Hand(
-          int numberOfDice,
-          int sidesOfDie
+          int sidesOfDie,
+          int numberOfDice
   ) {
     this.numberOfDice = numberOfDice;
     generateDice(sidesOfDie);
@@ -47,14 +47,12 @@ public class Hand {
     }
   }
 
-  // specific die rolls
-//  public void rollDice(Random random, int[] dieNumbers) {
-//    for (int dieNumber: dieNumbers) {
-//      Die die = availableDice.get(dieNumber - 1);
-//      dieValues.indexOf()
-//      die.rollDie();
-//    }
-//  }
+  public void roll(Random random, List<Integer> dieNumbers) {
+    for (int dieNumber: dieNumbers) {
+      var die = dice.get(dieNumber - 1);
+      die.roll(random);
+    }
+  }
 
   // overrides
   @Override

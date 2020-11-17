@@ -25,7 +25,7 @@ public class Yahtzee {
             "How many players?",
             "Players: ",
             1,
-            4
+            2
     ));
   }
 
@@ -34,6 +34,12 @@ public class Yahtzee {
     for (int count = 0; count < numberOfPlayers; count++) {
       var player = new Player(sidesOfDie, numberOfDice, random);
       players.add(player);
+    }
+  }
+
+  public void startGame() {
+    for (var player : players) {
+      player.turn();
     }
   }
 

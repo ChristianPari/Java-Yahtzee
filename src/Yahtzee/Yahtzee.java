@@ -26,10 +26,10 @@ public class Yahtzee {
     StringBuilder dieValues = new StringBuilder();
     Menu menu = new Menu();
 
-    for (int i = 0; i < userHand.diceValues.size(); i++) {
+    for (int i = 0; i < userHand.availableDice.size(); i++) {
 
       String dieNumber = Integer.toString(i + 1);
-      String dieValue = Integer.toString(userHand.diceValues.get(i));
+      String dieValue = Integer.toString(userHand.availableDice.get(i).getDieValue());
 
       dieValues.append("Die " + dieNumber + " [" + dieValue + "] | ");
     }

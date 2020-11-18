@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class Hand {
   public List<Die> availableDice = new ArrayList<>();
-  public List<Integer> diceValues = new ArrayList<>();
+//  public List<Integer> diceValues = new ArrayList<>();
   public int turns = 0;
 
   public Hand(
@@ -24,9 +24,8 @@ public class Hand {
   }
 
   public void rollDice() {
-    for (Die die :
-            availableDice) {
-      diceValues.add(die.rollDie());
+    for (Die die : availableDice) {
+      die.rollDie();
     }
     turns++;
   }
@@ -39,8 +38,8 @@ public class Hand {
       if (intDieNumber <= 6 & intDieNumber >= 1){
         for (int i = 1; i <= availableDice.size(); i++) {
           if (i == intDieNumber) {
-            int newDieValue = availableDice.get(i - 1).rollDie();
-            diceValues.set(i - 1, newDieValue);
+            Die die = availableDice.get(i - 1);
+            die.rollDie();
           }
         }
       } else {

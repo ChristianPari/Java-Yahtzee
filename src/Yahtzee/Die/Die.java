@@ -2,7 +2,7 @@ package Yahtzee.Die;
 
 public class Die {
   private int sides = 6;
-  public boolean isHeld = false;
+  private int value = 0;
 
   public Die() {}
 
@@ -12,8 +12,10 @@ public class Die {
     this.sides = sides;
   }
 
-  public int rollDie() {
+  public void rollDie() {
     int numberRolled = (int)(Math.random() * sides) + 1;
-    return numberRolled;
+    value = numberRolled;
   }
+
+  public int getDieValue() { return value; }
 }

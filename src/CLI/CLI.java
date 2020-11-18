@@ -7,10 +7,10 @@ import java.util.Scanner;
 
 public class CLI {
   // variables
-  private final Scanner scanner = new Scanner(System.in);
+  static private Scanner scanner = new Scanner(System.in);
 
   // methods
-  public List<Integer> getListIntegers(
+  public static List<Integer> getListIntegers(
           String prompt,
           String inputStarter,
           int min,
@@ -18,7 +18,7 @@ public class CLI {
   ) {
     System.out.println(prompt);
     System.out.print(inputStarter);
-    String choices = scanner.nextLine();
+    String choices = scanner.next();
     List<String> choicesList = Arrays.asList(choices.split(" "));
     List<Integer> intChoices = new ArrayList<>();
 
@@ -36,17 +36,17 @@ public class CLI {
     return intChoices;
   }
 
-  public String getString(
+  public static String getString(
           String prompt,
           String inputStarter
   ) {
     System.out.println(prompt);
     System.out.print(inputStarter);
-    String input = scanner.nextLine();
+    String input = scanner.next();
     return input;
   }
 
-  public int getNumber(
+   public static int getNumber(
           String prompt,
           String inputStarter,
           int min,
@@ -62,5 +62,13 @@ public class CLI {
     }
 
     return input;
+  }
+
+  public static String separator(int length) {
+    var builder = new StringBuilder();
+    for (int count = 0; count < length - 1; count++) {
+      builder.insert(count, "-");
+    }
+    return builder.toString();
   }
 }

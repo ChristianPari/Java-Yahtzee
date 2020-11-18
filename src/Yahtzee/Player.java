@@ -7,12 +7,10 @@ import java.util.Random;
 
 public class Player {
   // variables
-  private CLI cli = new CLI();
   private Random random;
   public String name;
   public Hand hand;
   private int rolls;
-  private int score;
 
   // constructors
   public Player(
@@ -20,8 +18,8 @@ public class Player {
           int numberOfDie,
           Random random
   ) {
-    this.name = cli.getString(
-            "What is your name?",
+    this.name = CLI.getString(
+            "\nWhat is your name?",
             "Name: "
     );
     this.random = random;
@@ -34,11 +32,11 @@ public class Player {
     while (rolls < 3) {
       if (rolls == 0) {
         roll();
-        System.out.println(hand);
+        System.out.println("\nROLLED: " + hand);
       }
 
       if (rolls == 1 | rolls == 2) {
-        List<Integer> choices = cli.getListIntegers(
+        List<Integer> choices = CLI.getListIntegers(
                 "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
                 "Dice: ",
                 0,
@@ -46,7 +44,7 @@ public class Player {
         );
 
         roll(choices);
-        System.out.println(hand);
+        System.out.println("\nROLLED: " + hand);
       }
     }
 
@@ -81,7 +79,12 @@ public class Player {
 //  public void hold() {}
 
   private void finishTurn() {
-    System.out.println(name + " final roll is " + hand);
+    String output = "\n" + name + "'s final roll is: " + hand;
+    int outputLength = output.length();
+    String separator = CLI.separator(outputLength);
+    System.out.println(separator);
+    System.out.println(output);
+    System.out.println(separator);
   }
 
   // overrides

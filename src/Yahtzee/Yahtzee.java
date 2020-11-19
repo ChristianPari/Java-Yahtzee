@@ -35,22 +35,9 @@ public class Yahtzee {
       System.out.println("\n" + player.name + "'s turn...");
       player.turn();
     }
-<<<<<<< HEAD
 
     displayScores();
   }
-=======
-  }
-
-  private void userTurn(Hand userHand) {
-    StringBuilder dieValues = new StringBuilder();
-    Menu menu = new Menu();
-
-    for (int i = 0; i < userHand.availableDice.size(); i++) {
-
-      String dieNumber = Integer.toString(i + 1);
-      String dieValue = Integer.toString(userHand.availableDice.get(i).getDieValue());
->>>>>>> main
 
   private void generatePlayers(int numberOfPlayers) {
     for (int count = 0; count < numberOfPlayers; count++) {

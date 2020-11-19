@@ -1,25 +1,45 @@
 package Yahtzee;
 
-import Yahtzee.Hand.Hand;
+import CLI.CLI;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Yahtzee {
+  // variables
+  private final List<Player> players = new ArrayList<>();
+  private final int sidesOfDie;
+  private final int numberOfDice;
+  private final Random random;
 
-  protected void game() {
-    Hand userHand = new Hand(5);
-    userHand.rollDice();
-    action("turn", userHand);
+  // constructors
+  public Yahtzee(
+          int sidesOnDie,
+          int numberOfDice
+  ) {
+    this.sidesOfDie = sidesOnDie;
+    this.numberOfDice = numberOfDice;
+    random = new Random();
+    generatePlayers(CLI.getNumber(
+            "\nHow many players?",
+            "Players: ",
+            1,
+            4
+    ));
   }
 
-  private void action(String action, Hand userHand) {
-    switch (action) {
-      case "turn":
-        userTurn(userHand);
-        break;
-
-      case "re-roll":
-        userReRoll(userHand);
-        break;
+  // methods
+  public void startGame() {
+    for (var player : players) {
+      System.out.println("\n" + player.name + "'s turn...");
+      player.turn();
     }
+<<<<<<< HEAD
+
+    displayScores();
+  }
+=======
   }
 
   private void userTurn(Hand userHand) {
@@ -30,43 +50,40 @@ public class Yahtzee {
 
       String dieNumber = Integer.toString(i + 1);
       String dieValue = Integer.toString(userHand.availableDice.get(i).getDieValue());
+>>>>>>> main
 
-      dieValues.append("Die " + dieNumber + " [" + dieValue + "] | ");
+  private void generatePlayers(int numberOfPlayers) {
+    for (int count = 0; count < numberOfPlayers; count++) {
+      var player = new Player(sidesOfDie, numberOfDice, random);
+      players.add(player);
     }
 
-    dieValues.delete(dieValues.length() - 2, dieValues.length());
-
-    if (userHand.turns == 3) {
-      System.out.println("\nYour final die values are:\n" + dieValues);
-      return;
-    }
-
-    System.out.println("\nYou rolled:\n" + dieValues);
-    Boolean isReRolling = menu.userReRoll();
-
-    if (!isReRolling) {
-      System.out.println("\nYour final die values are:\n" + dieValues);
-      return;
-    }
-
-    action("re-roll", userHand);
+    displayPlayers();
   }
 
-  private void userReRoll(Hand userHand) {
-    Menu menu = new Menu();
-    System.out.println("\nPlease enter the die number(s) you wish to re-roll..." +
-            "\nPlease enter Die Number similar to following example..." +
-            "\nExample: '1 2 3'");
-    String choices = menu.getResponse();
-    if (choices.isBlank()) {
-      userReRoll(userHand);
-    }
-    boolean nextAction = userHand.reRoll(choices);
+  private void displayPlayers() {
+    String header = "\n[PLAYERS]";
+    int headerLength = header.length();
+    String separator = CLI.separator(headerLength);
+    System.out.println(header);
 
-    if (nextAction)
-      action("turn", userHand);
-    else
-      userReRoll(userHand);
+    for (var player : players) {
+      System.out.println(player.name);
+    }
+
+    System.out.println(separator);
   }
 
+  private void displayScores() {
+    String header = "\n[SCORES]";
+    int headerLength = header.length();
+    String separator = CLI.separator(headerLength);
+    System.out.println(header);
+
+    for (var player : players) {
+      System.out.println(player);
+    }
+
+    System.out.println(separator);
+  }
 }

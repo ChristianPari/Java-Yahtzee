@@ -1,60 +1,44 @@
 package Yahtzee;
 
-import java.util.Scanner;
+import CLI.CLI;
 
 public class Menu {
-  private Scanner scanner = new Scanner(System.in);
-  private Yahtzee yahtzee = new Yahtzee();
-
-  public void welcome() {
-    System.out.println("Hello! Welcome to Yahtzee!\n");
-    System.out.println("Please choose from the list below...");
+  public static void welcome() {
+    System.out.println("Welcome!");
   }
 
-  public void end() {
-    System.out.println("\nHave a good day!");
+  public static void exit() {
+    System.out.println("Have a good day!");
   }
 
-  public void mainMenu() {
-    System.out.println("(1) Play!");
-    System.out.println("(2) Exit.");
-    int choice = scanner.nextInt();
+  public static void mainMenu() {
+    int choice = CLI.getNumber(
+            "\n1) Start Game" +
+                    "\n2) Exit",
+            "Enter Choice (1 - 2): ",
+            1,
+            2
+    );
 
-    switch (choice) {
-      case 1:
-        System.out.println("\nGreat, lets begin!");
-        yahtzee.game();
-        break;
-
-      case 2:
-        System.out.println("\nHave a great day!");
-        break;
-
-      default:
-        System.out.println("\nPLEASE ENTER A VALID OPTION\n");
-        mainMenu();
-        break;
-    }
-  }
-
-  protected boolean userReRoll() {
-    System.out.println("\nWould you like to roll again?");
-    System.out.print("[yes | no]: ");
-    String response = scanner.next().toLowerCase();
-
-    if (response.equals("yes") & response.equals("no")) {
-      System.out.println("\nPLEASE ENTER 'yes' or 'no'!\n");
-      userReRoll();
+    if (choice == 2) {
+      exit();
+      return;
     }
 
-    if (response.equals("yes"))
-      return true;
-    else
-      return false;
-  }
+    int sidesOnDie = CLI.getNumber(
+            "\nHow many sides per die?",
+            "Sides: ",
+            3,
+            16
+    );
+    int numberOfDice = CLI.getNumber(
+            "\nHow many dice?",
+            "Dice: ",
+            2,
+            10
+    );
 
-  protected String getResponse() {
-    String response = scanner.nextLine();
-    return response;
+    var yahtzee = new Yahtzee(sidesOnDie, numberOfDice);
+    yahtzee.startGame();
   }
 }

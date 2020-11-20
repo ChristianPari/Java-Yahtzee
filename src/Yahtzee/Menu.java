@@ -1,6 +1,6 @@
 package Yahtzee;
 
-import CLI.CLI;
+import Console.Console;
 
 public class Menu {
   public static void welcome() {
@@ -12,7 +12,7 @@ public class Menu {
   }
 
   public static void mainMenu() {
-    int choice = CLI.getNumber(
+    int choice = Console.getNumber(
             "\n1) Start Game" +
                     "\n2) Exit",
             "Enter Choice (1 - 2): ",
@@ -25,20 +25,20 @@ public class Menu {
       return;
     }
 
-    int sidesOnDie = CLI.getNumber(
+    int sidesOnDie = Console.getNumber(
             "\nHow many sides per die?",
             "Sides: ",
             3,
             16
     );
-    int numberOfDice = CLI.getNumber(
+    int numberOfDice = Console.getNumber(
             "\nHow many dice?",
             "Dice: ",
             2,
             10
     );
 
-    var yahtzee = new Yahtzee(sidesOnDie, numberOfDice);
-    yahtzee.startGame();
+    var gameSetup = new GameSetup(sidesOnDie, numberOfDice);
+    gameSetup.startGame();
   }
 }

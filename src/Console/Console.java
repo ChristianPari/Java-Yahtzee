@@ -1,11 +1,11 @@
-package CLI;
+package Console;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class CLI {
+public class Console {
   // variables
   static private Scanner scanner = new Scanner(System.in);
 

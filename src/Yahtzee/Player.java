@@ -1,6 +1,6 @@
 package Yahtzee;
 
-import CLI.CLI;
+import Console.Console;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +9,7 @@ public class Player {
   // variables
   private Random random;
   public String name;
+  public String playerNumber;
   public Hand hand;
   private int rolls;
 
@@ -16,10 +17,12 @@ public class Player {
   public Player(
           int sidesOfDie,
           int numberOfDie,
-          Random random
+          Random random,
+          String playerNumber
   ) {
-    this.name = CLI.getString(
-            "\nWhat is your name?",
+    this.playerNumber = "Player " + playerNumber;
+    this.name = Console.getString(
+            "\n" + this.playerNumber + ", what is your name?",
             "Name: "
     );
     this.random = random;
@@ -32,11 +35,11 @@ public class Player {
     while (rolls < 3) {
       if (rolls == 0) {
         roll();
-        System.out.println("\nROLLED: " + hand);
+        System.out.println("\n[ROLLED]\n" + hand.getRollValues());
       }
 
       if (rolls == 1 | rolls == 2) {
-        List<Integer> choices = CLI.getListIntegers(
+        List<Integer> choices = Console.getListIntegers(
                 "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
                 "Dice: ",
                 0,
@@ -44,7 +47,7 @@ public class Player {
         );
 
         roll(choices);
-        System.out.println("\nROLLED: " + hand);
+        System.out.println("\n[ROLLED]\n\t" + hand);
       }
     }
 
@@ -79,9 +82,9 @@ public class Player {
 //  public void hold() {}
 
   private void finishTurn() {
-    String output = "\n" + name + "'s final roll is: " + hand;
+    String output = "\n" + name + "'s final roll is: " + hand.getRollValues();
     int outputLength = output.length();
-    String separator = CLI.separator(outputLength);
+    String separator = Console.separator(outputLength);
     System.out.println(separator);
     System.out.println(output);
     System.out.println(separator);
@@ -90,7 +93,7 @@ public class Player {
   // overrides
   @Override
   public String toString() {
-    String output = name + "'s Dice: " + hand.toString();
+    String output = name + "'s Dice: " + hand.getRollValues();
     return output;
   }
 }

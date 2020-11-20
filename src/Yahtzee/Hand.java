@@ -2,13 +2,16 @@ package Yahtzee;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
+import java.util.function.Predicate;
 
 public class Hand {
   // variables
   private int numberOfDice = 5;
   private int sidesOfDie = 6;
   public List<Die> dice = new ArrayList<>();
+  private List<Die> heldDice = new ArrayList<>();
 
   // constructors
   public Hand() {
@@ -54,12 +57,40 @@ public class Hand {
     }
   }
 
+  public void holdDice(List<Integer> dieNumbers) {
+    for (int dieNumber : dieNumbers) {
+      Die die = dice.get(dieNumber - 1);
+      die.isHeld = true;
+      heldDice.add(die);
+    }
+  }
+
+  public String getRollValues() {
+    String output = "";
+    for (var die : dice) {
+      output += die.getValue() + " ";
+    }
+    return output.trim();
+  }
+
   // overrides
   @Override
   public String toString() {
     String output = "";
+
+    if (heldDice.size() != 0) {
+      output += "\nCurrently holding... ";
+      for (var die : heldDice) {
+        output += die.getValue() + " ";
+      }
+    }
+
+    output += heldDice.size() == 0
+            ? "\nMost current roll value... "
+            : "\nCurrently waiting to re-roll... ";
     for (var die : dice) {
-      output += die.getValue() + " ";
+      if (!die.isHeld)
+        output += die.getValue() + " ";
     }
     return output.trim();
   }

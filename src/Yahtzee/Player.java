@@ -82,6 +82,7 @@ public class Player {
 //  public void hold() {}
 
   private void finishTurn() {
+    rolls = 0;
     String output = "\n" + name + "'s final roll is: " + hand.getRollValues();
     int outputLength = output.length();
     String separator = Console.separator(outputLength);

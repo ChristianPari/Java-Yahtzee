@@ -1,6 +1,7 @@
-package Yahtzee;
+package Yahtzee.UserInterface;
 
 import Console.Console;
+import Yahtzee.GameSource.GameSetup;
 
 public class Menu {
   public static void welcome() {

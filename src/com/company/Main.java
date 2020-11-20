@@ -1,11 +1,10 @@
 package com.company;
 
-import Yahtzee.Menu;
+import Yahtzee.Yahtzee;
 
 public class Main {
 
   public static void main(String[] args) {
-    Menu.welcome();
-    Menu.mainMenu();
+    new Yahtzee();
   }
 }

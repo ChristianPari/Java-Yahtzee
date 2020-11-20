@@ -1,6 +1,7 @@
-package Yahtzee;
+package Yahtzee.GameSource;
 
 import Console.Console;
+import Yahtzee.GameSource.Player.Player;
 
 import java.util.List;
 

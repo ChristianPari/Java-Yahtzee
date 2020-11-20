@@ -1,4 +1,4 @@
-package Yahtzee;
+package Yahtzee.GameSource.Player;
 
 import Console.Console;
 

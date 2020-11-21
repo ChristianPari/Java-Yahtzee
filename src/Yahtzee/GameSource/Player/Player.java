@@ -2,6 +2,7 @@ package Yahtzee.GameSource.Player;
 
 import Console.Console;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -27,59 +28,112 @@ public class Player {
     );
     this.random = random;
     hand = new Hand(sidesOfDie, numberOfDie);
-    rolls = 0;
+    rolls = 1;
   }
 
   // methods
   public void turn() {
-    while (rolls < 3) {
-      if (rolls == 0) {
-        roll();
-        System.out.println("\n[ROLLED]\n" + hand.getRollValues());
-      }
+    // roll 1) initial roll
+      // display dice
+        // option to choose what to hold
+    // roll 2) roll non chosen dice
+      // display dice
+        // option to choose what to hold
+    // roll 3) roll non chosen dice
+      // display final dice
+        // end turn
 
-      if (rolls == 1 | rolls == 2) {
+    while (rolls <= 3) {
+      if (rolls == 1) {
+        roll();
         List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
+                "\nPlease enter the dice you want to hold, the rest will be re-rolled",
                 "Dice: ",
                 0,
                 hand.dice.size()
         );
+        hold(choices);
 
-        roll(choices);
-        System.out.println("\n[ROLLED]\n\t" + hand);
+      } else if (rolls == 2) {
+        roll(getRollableDice());
+        hand.clearHeldDice();
+        List<Integer> choices = Console.getListIntegers(
+                "\nPlease enter the dice you want to hold, the rest will be re-rolled",
+                "Dice: ",
+                0,
+                hand.dice.size()
+        );
+        hold(choices);
+
+      } else if (rolls == 3) {
+        roll(getRollableDice());
+        hand.clearHeldDice();
+        finishTurn();
+
       }
-    }
-
-    if (rolls == 3) {
-      finishTurn();
     }
   }
 
-  private void roll() {
-    if (rolls >= 3) {
-      System.out.println("\nNo more turns");
-      return;
-    }
+//    while (rolls < 3) {
+//      if (rolls == 0) {
+//        roll();
+//        System.out.println("\n[ROLLED]\n" + hand.getRollValues());
+//      }
+//
+//      if (rolls == 1 | rolls == 2) {
+//        List<Integer> choices = Console.getListIntegers(
+//                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
+//                "Dice: ",
+//                0,
+//                hand.dice.size()
+//        );
+//
+//        roll(choices);
+//        System.out.println("\n[ROLLED]\n\t" + hand);
+//      }
+//    }
+//
+//    if (rolls == 3) {
+//      finishTurn();
+//    }
 
-    hand.roll(random);
+  private void roll() {
     rolls++;
+    hand.roll(random);
+    System.out.println("\n[ROLLED]\n" + hand.getRollValues());
   }
 
   private void roll(List<Integer> dieNumbers) {
-    if (rolls >= 3) {
-      System.out.println("\nNo more turns");
-      return;
-    } else if (dieNumbers.size() == 1 & dieNumbers.get(0) == 0) {
+    if (dieNumbers.size() == 1 & dieNumbers.get(0) == 0) {
       rolls = 3;
       return;
     }
 
-    hand.roll(random, dieNumbers);
     rolls++;
+    hand.roll(random, dieNumbers);
+    System.out.println(rolls != 3 ? "\n[ROLLED]\n" + hand : "");
   }
 
-//  public void hold() {}
+  private void hold(List<Integer> dieNumbers) {
+    if (dieNumbers.size() == 1 & dieNumbers.get(0) == 0) {
+      System.out.println("options");
+      return;
+    }
+
+    hand.holdDice(dieNumbers);
+  }
+
+  private List<Integer> getRollableDice() {
+    List<Integer> dice = new ArrayList<>();
+    for (var die : hand.dice) {
+      if (!die.isHeld) {
+        int index = hand.dice.indexOf(die);
+        dice.add(index + 1);
+      }
+    }
+
+    return dice;
+  }
 
   private void finishTurn() {
     rolls = 0;

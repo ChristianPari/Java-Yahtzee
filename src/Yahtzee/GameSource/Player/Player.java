@@ -32,7 +32,15 @@ public class Player {
   }
 
   // methods
+
   public void turn() {
+    roll();
+    for (int count = 1; count <= 3; count++) {
+      attempt();
+    }
+  }
+
+  public void attempt() {
     // roll 1) initial roll
       // display dice
         // option to choose what to hold
@@ -42,63 +50,24 @@ public class Player {
     // roll 3) roll non chosen dice
       // display final dice
         // end turn
+    if (rolls < 3) {
+      List<Integer> choices = Console.getListIntegers(
+              "\nPlease enter the dice you want to hold, the rest will be re-rolled",
+              "Dice: ",
+              0,
+              hand.dice.size()
+      );
+      hold(choices);
+      roll(getRollableDice());
+      rolls++;
+    }
 
-    while (rolls <= 3) {
-      if (rolls == 1) {
-        roll();
-        List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you want to hold, the rest will be re-rolled",
-                "Dice: ",
-                0,
-                hand.dice.size()
-        );
-        hold(choices);
-
-      } else if (rolls == 2) {
-        roll(getRollableDice());
-        hand.clearHeldDice();
-        List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you want to hold, the rest will be re-rolled",
-                "Dice: ",
-                0,
-                hand.dice.size()
-        );
-        hold(choices);
-
-      } else if (rolls == 3) {
-        roll(getRollableDice());
-        hand.clearHeldDice();
-        finishTurn();
-
-      }
+    if (rolls == 3) {
+      finishTurn();
     }
   }
 
-//    while (rolls < 3) {
-//      if (rolls == 0) {
-//        roll();
-//        System.out.println("\n[ROLLED]\n" + hand.getRollValues());
-//      }
-//
-//      if (rolls == 1 | rolls == 2) {
-//        List<Integer> choices = Console.getListIntegers(
-//                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
-//                "Dice: ",
-//                0,
-//                hand.dice.size()
-//        );
-//
-//        roll(choices);
-//        System.out.println("\n[ROLLED]\n\t" + hand);
-//      }
-//    }
-//
-//    if (rolls == 3) {
-//      finishTurn();
-//    }
-
   private void roll() {
-    rolls++;
     hand.roll(random);
     System.out.println("\n[ROLLED]\n" + hand.getRollValues());
   }
@@ -109,9 +78,8 @@ public class Player {
       return;
     }
 
-    rolls++;
     hand.roll(random, dieNumbers);
-    System.out.println(rolls != 3 ? "\n[ROLLED]\n" + hand : "");
+    System.out.println(rolls != 3 ? "\n[ROLLED]\n" + hand.getRollValues() : "");
   }
 
   private void hold(List<Integer> dieNumbers) {

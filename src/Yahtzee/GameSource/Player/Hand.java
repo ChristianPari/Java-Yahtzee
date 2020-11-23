@@ -9,7 +9,6 @@ public class Hand {
   private int numberOfDice = 5;
   private int sidesOfDie = 6;
   public List<Die> dice = new ArrayList<>();
-//  private List<Die> heldDice = new ArrayList<>();
 
   // constructors
   public Hand() {
@@ -55,46 +54,13 @@ public class Hand {
     }
   }
 
-  public void holdDice(List<Integer> dieNumbers) {
-    for (int dieNumber : dieNumbers) {
-      var die = dice.get(dieNumber - 1);
-      die.isHeld = true;
-    }
-  }
-
-  public void clearHeldDice() {
-    for (var die : dice) {
-      die.isHeld = false;
-    }
-  }
-
-  public String getRollValues() {
+  // overrides
+  @Override
+  public String toString() {
     String output = "";
     for (var die : dice) {
       output += die.getValue() + " ";
     }
     return output.trim();
   }
-
-  // overrides
-//  @Override
-//  public String toString() {
-//    String output = "";
-//
-//    if (heldDice.size() != 0) {
-//      output += "\nCurrently holding... ";
-//      for (var die : heldDice) {
-//        output += die.getValue() + " ";
-//      }
-//    }
-//
-//    output += heldDice.size() == 0
-//            ? "\nMost current roll value... "
-//            : "\nCurrently waiting to re-roll... ";
-//    for (var die : dice) {
-//      if (!die.isHeld)
-//        output += die.getValue() + " ";
-//    }
-//    return output.trim();
-//  }
 }

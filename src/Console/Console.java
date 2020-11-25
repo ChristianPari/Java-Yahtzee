@@ -11,59 +11,75 @@ public class Console {
 
   // methods
   public static List<Integer> getListIntegers(
-          String prompt,
-          String inputStarter,
-          int min,
-          int max
+      String prompt,
+      String inputStarter,
+      int min,
+      int max
   ) {
-    System.out.println(prompt);
-    System.out.print(inputStarter);
-    String choices = scanner.nextLine();
-    List<String> choicesList = Arrays.asList(choices.split(" "));
     List<Integer> intChoices = new ArrayList<>();
 
-    for (String choice : choicesList) {
-      if (!choice.matches("[" + min + "-" + max + "]")) {
-        System.out.println("Please provide a valid choice input...");
-        intChoices.clear();
-        return getListIntegers(prompt, inputStarter, min, max);
+    while (true) {
+      System.out.println(prompt);
+      System.out.print(inputStarter);
+      String choices = scanner.nextLine().trim();
+      List<String> choicesList = Arrays.asList(choices.split("\s+"));
+
+      for (String choice : choicesList) {
+        if (!choice.matches("[" + min + "-" + max + "]")) {
+          System.out.println("Please provide a valid choice input...");
+          intChoices.clear();
+          break;
+        }
+
+        int numericalChoice = Integer.parseInt(choice);
+        intChoices.add(numericalChoice);
       }
 
-      int numericalChoice = Integer.parseInt(choice);
-      intChoices.add(numericalChoice);
+      if (intChoices.size() == choicesList.size()) {
+        break;
+      }
     }
 
     return intChoices;
   }
 
   public static String getString(
-          String prompt,
-          String inputStarter
+      String prompt,
+      String inputStarter
   ) {
     System.out.println(prompt);
     System.out.print(inputStarter);
-    String input = scanner.next();
-    scanner.nextLine();
+    String input = scanner.nextLine();
     return input;
   }
 
-   public static int getNumber(
-          String prompt,
-          String inputStarter,
-          int min,
-          int max
+  public static int getNumber(
+      String prompt,
+      String inputStarter,
+      int min,
+      int max
   ) {
+    int choice = 0;
     System.out.println(prompt);
     System.out.print(inputStarter);
-    int input = scanner.nextInt();
-    scanner.nextLine();
 
-    if (input < min | input > max) {
-      System.out.println("Please enter a valid input...");
-      return getNumber(prompt, inputStarter, min, max);
+    while (true) {
+      try {
+        choice = scanner.nextInt();
+        scanner.nextLine();
+        if (choice < min || choice > max) {
+          System.out.println("Please enter a valid input...\n");
+          System.out.print(inputStarter);
+        } else {
+          break;
+        }
+      } catch (Exception e) {
+        scanner.next();
+        System.out.println("Please enter a valid input...\n");
+        System.out.print(inputStarter);
+      }
     }
-
-    return input;
+    return choice;
   }
 
   public static String separator(int length) {

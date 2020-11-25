@@ -4,7 +4,7 @@ import CLI.CLI;
 
 public class Menu {
   public static void welcome() {
-    System.out.println("Welcome!");
+    System.out.println("Welcome to Yahtzee!");
   }
 
   public static void exit() {

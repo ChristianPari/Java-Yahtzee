@@ -35,7 +35,7 @@ public class Player {
         System.out.println("\nROLLED: " + hand);
       }
 
-      if (rolls == 1 | rolls == 2) {
+      if (rolls == 1 || rolls == 2) {
         List<Integer> choices = CLI.getListIntegers(
                 "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
                 "Dice: ",
@@ -67,7 +67,7 @@ public class Player {
     if (rolls >= 3) {
       System.out.println("\nNo more turns");
       return;
-    } else if (dieNumbers.size() == 1 & dieNumbers.get(0) == 0) {
+    } else if (dieNumbers.contains(0)) {
       rolls = 3;
       return;
     }

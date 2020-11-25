@@ -36,7 +36,6 @@ public class Player {
 
       if (rolls == 0) {
         roll();
-        System.out.println("\n[ROLLED]\n" + hand);
       }
 
       if (rolls == 1) {
@@ -48,7 +47,6 @@ public class Player {
         );
 
         roll(choices);
-        System.out.println("\n[ROLLED]\n" + hand);
       }
 
       if (rolls == 2) {
@@ -63,25 +61,29 @@ public class Player {
         finishTurn();
       }
     }
+
+    rolls = 0;
   }
 
   private void roll() {
     hand.roll(random);
+    System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
   }
 
   private void roll(List<Integer> dieNumbers) {
-    if (dieNumbers.size() == 1 & dieNumbers.get(0) == 0) {
+    if (dieNumbers.contains(0)) {
       rolls = 3;
+      finishTurn();
       return;
     }
 
     hand.roll(random, dieNumbers);
+    System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
   }
 
   private void finishTurn() {
-    rolls = 0;
     String output = name + "'s final roll is: " + hand;
     int outputLength = output.length();
     String separator = Console.separator(outputLength);

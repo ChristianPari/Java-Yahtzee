@@ -80,17 +80,6 @@ public class CLI {
       }
     }
     return choice;
-
-//    System.out.println(prompt);
-//    System.out.print(inputStarter);
-//    int input = scanner.nextInt();
-//    scanner.nextLine();
-//
-//    if (input < min || input > max) {
-//      System.out.println("Please enter a valid input...");
-//      return getNumber(prompt, inputStarter, min, max);
-//    }
-//    return input;
   }
 
   public static String separator(int length) {

@@ -38,13 +38,8 @@ public class Player {
         roll();
       }
 
-<<<<<<< HEAD:src/Yahtzee/GameSource/Player/Player.java
       if (rolls == 1) {
         List<Integer> choices = Console.getListIntegers(
-=======
-      if (rolls == 1 || rolls == 2) {
-        List<Integer> choices = CLI.getListIntegers(
->>>>>>> main:src/Yahtzee/Player.java
                 "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
                 "Dice: ",
                 0,
@@ -77,14 +72,10 @@ public class Player {
   }
 
   private void roll(List<Integer> dieNumbers) {
-<<<<<<< HEAD:src/Yahtzee/GameSource/Player/Player.java
     if (dieNumbers.contains(0)) {
-=======
-    if (rolls >= 3) {
-      System.out.println("\nNo more turns");
-      return;
-    } else if (dieNumbers.contains(0)) {
->>>>>>> main:src/Yahtzee/Player.java
+      if (dieNumbers.size() > 1) {
+        System.out.println("Turn ended because you entered a '0' into the choices...");
+      }
       rolls = 3;
       finishTurn();
       return;

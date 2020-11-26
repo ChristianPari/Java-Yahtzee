@@ -1,4 +1,4 @@
-package Yahtzee;
+package Yahtzee.GameSource.Player;
 
 import java.util.ArrayList;
 import java.util.List;

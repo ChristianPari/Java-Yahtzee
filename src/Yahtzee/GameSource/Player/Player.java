@@ -1,6 +1,6 @@
-package Yahtzee;
+package Yahtzee.GameSource.Player;
 
-import CLI.CLI;
+import Console.Console;
 
 import java.util.List;
 import java.util.Random;
@@ -9,6 +9,7 @@ public class Player {
   // variables
   private Random random;
   public String name;
+  public String playerNumber;
   public Hand hand;
   private int rolls;
 
@@ -16,10 +17,12 @@ public class Player {
   public Player(
           int sidesOfDie,
           int numberOfDie,
-          Random random
+          Random random,
+          String playerNumber
   ) {
-    this.name = CLI.getString(
-            "\nWhat is your name?",
+    this.playerNumber = "Player " + playerNumber;
+    this.name = Console.getString(
+            "\n" + this.playerNumber + ", what is your name?",
             "Name: "
     );
     this.random = random;
@@ -30,13 +33,13 @@ public class Player {
   // methods
   public void turn() {
     while (rolls < 3) {
+
       if (rolls == 0) {
         roll();
-        System.out.println("\nROLLED: " + hand);
       }
 
-      if (rolls == 1 || rolls == 2) {
-        List<Integer> choices = CLI.getListIntegers(
+      if (rolls == 1) {
+        List<Integer> choices = Console.getListIntegers(
                 "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
                 "Dice: ",
                 0,
@@ -44,44 +47,50 @@ public class Player {
         );
 
         roll(choices);
-        System.out.println("\nROLLED: " + hand);
+      }
+
+      if (rolls == 2) {
+        List<Integer> choices = Console.getListIntegers(
+                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
+                "Dice: ",
+                0,
+                hand.dice.size()
+        );
+
+        roll(choices);
+        finishTurn();
       }
     }
 
-    if (rolls == 3) {
-      finishTurn();
-    }
+    rolls = 0;
   }
 
   private void roll() {
-    if (rolls >= 3) {
-      System.out.println("\nNo more turns");
-      return;
-    }
-
     hand.roll(random);
+    System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
   }
 
   private void roll(List<Integer> dieNumbers) {
-    if (rolls >= 3) {
-      System.out.println("\nNo more turns");
-      return;
-    } else if (dieNumbers.contains(0)) {
+    if (dieNumbers.contains(0)) {
+      if (dieNumbers.size() > 1) {
+        System.out.println("Turn ended because you entered a '0' into the choices...");
+      }
       rolls = 3;
+      finishTurn();
       return;
     }
 
     hand.roll(random, dieNumbers);
+    System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
   }
 
-//  public void hold() {}
-
   private void finishTurn() {
-    String output = "\n" + name + "'s final roll is: " + hand;
+    String output = name + "'s final roll is: " + hand;
     int outputLength = output.length();
-    String separator = CLI.separator(outputLength);
+    String separator = Console.separator(outputLength);
+    System.out.println("");
     System.out.println(separator);
     System.out.println(output);
     System.out.println(separator);
@@ -90,7 +99,7 @@ public class Player {
   // overrides
   @Override
   public String toString() {
-    String output = name + "'s Dice: " + hand.toString();
+    String output = name + "'s Dice: " + hand;
     return output;
   }
 }

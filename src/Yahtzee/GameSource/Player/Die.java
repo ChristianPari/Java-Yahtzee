@@ -1,4 +1,6 @@
-package Yahtzee;
+package Yahtzee.GameSource.Player;
+
+import Yahtzee.Yahtzee;
 
 import java.util.Random;
 

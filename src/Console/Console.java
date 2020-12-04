@@ -22,7 +22,7 @@ public class Console {
       System.out.println(prompt);
       System.out.print(inputStarter);
       String choices = scanner.nextLine().trim();
-      List<String> choicesList = Arrays.asList(choices.split("\s+"));
+      List<String> choicesList = Arrays.asList(choices.split("\\s+"));
 
       for (String choice : choicesList) {
         if (!choice.matches("[" + min + "-" + max + "]")) {

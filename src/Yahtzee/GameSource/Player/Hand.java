@@ -15,29 +15,10 @@ public class Hand {
     generateDice();
   }
 
-  public Hand(int numberOfDice) {
-    this.numberOfDice = numberOfDice;
-    generateDice();
-  }
-
-  public Hand(
-          int sidesOfDie,
-          int numberOfDice
-  ) {
-    this.numberOfDice = numberOfDice;
-    generateDice(sidesOfDie);
-  }
-
   // methods
   private void generateDice() {
     for (int count = 0; count < numberOfDice; count++) {
       dice.add(new Die());
-    }
-  }
-
-  private void generateDice(int sidesOnDie) {
-    for (int count = 0; count < numberOfDice; count++) {
-      dice.add(new Die(sidesOnDie));
     }
   }
 

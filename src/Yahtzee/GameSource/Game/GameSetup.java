@@ -1,4 +1,4 @@
-package Yahtzee.GameSource;
+package Yahtzee.GameSource.Game;
 
 import Console.Console;
 import Yahtzee.GameSource.Player.Player;
@@ -10,18 +10,10 @@ import java.util.Random;
 public class GameSetup {
   // variables
   private final List<Player> players = new ArrayList<>();
-  private final int sidesOfDie;
-  private final int numberOfDice;
-  private final Random random;
+  private final Random random = new Random();
 
   // constructors
-  public GameSetup(
-          int sidesOnDie,
-          int numberOfDice
-  ) {
-    this.sidesOfDie = sidesOnDie;
-    this.numberOfDice = numberOfDice;
-    random = new Random();
+  public GameSetup() {
     generatePlayers(Console.getNumber(
             "\nHow many players?",
             "Players: ",
@@ -38,7 +30,7 @@ public class GameSetup {
 
   private void generatePlayers(int numberOfPlayers) {
     for (int count = 1; count <= numberOfPlayers; count++) {
-      var player = new Player(sidesOfDie, numberOfDice, random, Integer.toString(count));
+      var player = new Player(random, Integer.toString(count));
       players.add(player);
     }
   }

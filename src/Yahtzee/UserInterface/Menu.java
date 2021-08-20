@@ -1,7 +1,7 @@
 package Yahtzee.UserInterface;
 
 import Console.Console;
-import Yahtzee.GameSource.GameSetup;
+import Yahtzee.GameSource.Game.GameSetup;
 
 public class Menu {
   public static void welcome() {
@@ -32,21 +32,7 @@ public class Menu {
       return;
     }
 
-    int sidesOnDie = Console.getNumber(
-            "\nHow many sides per die?",
-            "Sides: ",
-            3,
-            16
-    );
-
-    int numberOfDice = Console.getNumber(
-            "\nHow many dice?",
-            "Dice: ",
-            2,
-            10
-    );
-
-    var gameSetup = new GameSetup(sidesOnDie, numberOfDice);
+    var gameSetup = new GameSetup();
     gameSetup.startGame();
   }
 }

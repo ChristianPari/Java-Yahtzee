@@ -1,22 +1,25 @@
 package Yahtzee.GameSource.Player;
 
 import Console.Console;
+import Yahtzee.GameSource.Player.Scorecard.ScoreTypes;
+import Yahtzee.GameSource.Player.Scorecard.Scorecard;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class Player {
   // variables
   private Random random;
-  public String name;
-  public String playerNumber;
-  public Hand hand;
-  private int rolls;
+  private String name;
+  private String playerNumber;
+  public Hand hand = new Hand();
+  private int rolls = 0;
+  private Scorecard scorecard = new Scorecard();
 
   // constructors
   public Player(
-          int sidesOfDie,
-          int numberOfDie,
           Random random,
           String playerNumber
   ) {
@@ -26,11 +29,12 @@ public class Player {
             "Name: "
     );
     this.random = random;
-    hand = new Hand(sidesOfDie, numberOfDie);
-    rolls = 0;
   }
 
   // methods
+  public String getName() { return name; }
+  public String getPlayerNumber() { return playerNumber; }
+
   public void turn() {
     while (rolls < 3) {
 
@@ -38,27 +42,18 @@ public class Player {
         roll();
       }
 
-      if (rolls == 1) {
+      if (rolls <= 2) {
         List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
+                "\nPlease enter the dice you wish to re-roll or 0 to end turn..." +
+                  "\nFormat: 1 3 5",
                 "Dice: ",
                 0,
                 hand.dice.size()
         );
 
         roll(choices);
-      }
-
-      if (rolls == 2) {
-        List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you wish to re-roll or 0 to end turn...",
-                "Dice: ",
-                0,
-                hand.dice.size()
-        );
-
-        roll(choices);
-        finishTurn();
+        if (rolls == 2)
+          finishTurn();
       }
     }
 
@@ -84,6 +79,32 @@ public class Player {
     hand.roll(random, dieNumbers);
     System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
+  }
+
+  private void chooseScore() {
+    // each unique number has to have own choice: 1 2 3 2 3 -> 1 Ones 2 Twos 2 Threes
+    // check for 3, 4 or 5 of same die value: 3 and 4 are total of die values, 5 is Yahtzee
+    // check for full house (3 same die, 2 same different die)
+    // check for small straight and large straight
+    // always have a chance option
+
+    Map<ScoreTypes, Integer> options = new HashMap<>();
+    for (Die d : hand.dice) {
+      for (ScoreTypes st : ScoreTypes.values()) {
+        int scoreID = st.ordinal() + 1;
+        if (scoreID > 6)
+          break;
+
+        if (scoreID == d.getValue()) {
+          int amountInHand = 1;
+
+          if (options.containsKey(st))
+            amountInHand += options.get(st);
+
+          options.put(st, amountInHand);
+        }
+      }
+    }
   }
 
   private void finishTurn() {

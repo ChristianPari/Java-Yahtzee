@@ -1,4 +1,4 @@
-package Yahtzee.GameSource;
+package Yahtzee.GameSource.Game;
 
 import Console.Console;
 import Yahtzee.GameSource.Player.Player;
@@ -34,7 +34,7 @@ public class Game {
     System.out.println(currentRound == 13 ? "[FINAL ROUND]" : "\nRound " + currentRound);
 
     for (var player : players) {
-      System.out.println("\n" + player.name + "'s turn...");
+      System.out.println("\n" + player.getName() + "'s turn...");
       player.turn();
     }
   }
@@ -46,7 +46,7 @@ public class Game {
     System.out.println(header);
 
     for (var player : players) {
-      System.out.println(player.playerNumber + ": " + player.name);
+      System.out.println(player.getPlayerNumber() + ": " + player.getName());
     }
 
     System.out.println(separator);

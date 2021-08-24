@@ -26,8 +26,12 @@ public class Scorecard {
     }
   }
 
+  public boolean isAvailable(ScoreTypes st) { return scorecard.get(st) == null; }
+
   public boolean addScore(ScoreTypes st, int score) {
     if (scorecard.get(st) == null) {
+      if (defaultScores.containsKey(st))
+        score = defaultScores.get(st);
       scorecard.put(st, score);
       return true; // successful score added
     }

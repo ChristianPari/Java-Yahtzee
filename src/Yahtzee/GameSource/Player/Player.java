@@ -1,6 +1,7 @@
 package Yahtzee.GameSource.Player;
 
 import Console.Console;
+import Yahtzee.GameSource.Game.ScoreOptions;
 import Yahtzee.GameSource.Player.Scorecard.ScoreTypes;
 import Yahtzee.GameSource.Player.Scorecard.Scorecard;
 
@@ -36,24 +37,27 @@ public class Player {
   public String getPlayerNumber() { return playerNumber; }
 
   public void turn() {
-    while (rolls < 3) {
-
-      if (rolls == 0) {
+    while (rolls < 4) {
+      if (rolls == 0)
         roll();
-      }
 
-      if (rolls <= 2) {
-        List<Integer> choices = Console.getListIntegers(
-                "\nPlease enter the dice you wish to re-roll or 0 to end turn..." +
-                  "\nFormat: 1 3 5",
-                "Dice: ",
-                0,
-                hand.dice.size()
-        );
+      if (rolls <= 3) {
+        int choice = decide(rolls);
 
-        roll(choices);
-        if (rolls == 2)
-          finishTurn();
+        if (choice == 1) {
+          List<Integer> reRolling = Console.getListIntegers(
+            "\nPlease enter the dice you wish to re-roll" +
+              "\nFormat: 1 3 5",
+            "Dice: ",
+            1,
+            hand.dice.size()
+          );
+          roll(reRolling);
+
+        } else {
+          rolls = 4;
+          pickScore(ScoreOptions.scoreChoices(hand.dice, scorecard));
+        }
       }
     }
 
@@ -67,51 +71,55 @@ public class Player {
   }
 
   private void roll(List<Integer> dieNumbers) {
-    if (dieNumbers.contains(0)) {
-      if (dieNumbers.size() > 1) {
-        System.out.println("Turn ended because you entered a '0' into the choices...");
-      }
-      rolls = 3;
-      finishTurn();
-      return;
-    }
-
     hand.roll(random, dieNumbers);
-    System.out.println("\n[ROLLED]\n" + hand);
+    System.out.println("\n[ROLLED] " + hand);
     rolls++;
   }
 
-  private void chooseScore() {
-    // each unique number has to have own choice: 1 2 3 2 3 -> 1 Ones 2 Twos 2 Threes
-    // check for 3, 4 or 5 of same die value: 3 and 4 are total of die values, 5 is Yahtzee
-    // check for full house (3 same die, 2 same different die)
-    // check for small straight and large straight
-    // always have a chance option
-
-    Map<ScoreTypes, Integer> options = new HashMap<>();
-    for (Die d : hand.dice) {
-      for (ScoreTypes st : ScoreTypes.values()) {
-        int scoreID = st.ordinal() + 1;
-        if (scoreID > 6)
-          break;
-
-        if (scoreID == d.getValue()) {
-          int amountInHand = 1;
-
-          if (options.containsKey(st))
-            amountInHand += options.get(st);
-
-          options.put(st, amountInHand);
-        }
-      }
+  private int decide(int rolls) {
+    if (rolls <= 2) {
+      return Console.getNumber(
+        "\nWould you like to..." +
+          "\n1) Roll again" +
+          "\n2) Choose a score to keep",
+        "\nChoice: ",
+        1,
+        2
+      );
     }
+
+    return 0;
   }
 
-  private void finishTurn() {
-    String output = name + "'s final roll is: " + hand;
+  private void pickScore(Map<ScoreTypes, Integer> choices) {
+    Map<Integer, ScoreTypes> picks = new HashMap<>();
+    String choicesStr = "\n";
+    int counter = 1;
+    int max = choices.size();
+    for (ScoreTypes st : choices.keySet()) {
+      picks.put(counter, st);
+      String placeholder = counter++ + ") ";
+      placeholder += st.toString() + ": " + choices.get(st) + " points\n";
+      choicesStr += placeholder;
+    }
+
+    int choice = Console.getNumber(
+      "\nThese are your possible choices..." + choicesStr,
+      "Choice (1-" + max + "): ",
+      1,
+      max
+    );
+
+    ScoreTypes picked = picks.get(choice);
+    int score = choices.get(picked);
+    scorecard.addScore(picked, score);
+    finishTurn(picked, score);
+  }
+
+  private void finishTurn(ScoreTypes picked, int score) {
+    String output = "\n" + name + " picked " + picked.toString() + " for " + score + " points!";
     int outputLength = output.length();
     String separator = Console.separator(outputLength);
-    System.out.println("");
     System.out.println(separator);
     System.out.println(output);
     System.out.println(separator);

@@ -17,7 +17,7 @@ public class Player {
   private String playerNumber;
   public Hand hand = new Hand();
   private int rolls = 0;
-  private Scorecard scorecard = new Scorecard();
+  public Scorecard scorecard = new Scorecard();
 
   // constructors
   public Player(
@@ -38,6 +38,8 @@ public class Player {
 
   public void turn() {
     while (rolls < 4) {
+      System.out.println(scorecard.toString());
+
       if (rolls == 0)
         roll();
 
@@ -117,7 +119,7 @@ public class Player {
   }
 
   private void finishTurn(ScoreTypes picked, int score) {
-    String output = "\n" + name + " picked " + picked.toString() + " for " + score + " points!";
+    String output = name + " picked " + picked.toString() + " for " + score + " points!";
     int outputLength = output.length();
     String separator = Console.separator(outputLength);
     System.out.println(separator);
@@ -128,7 +130,7 @@ public class Player {
   // overrides
   @Override
   public String toString() {
-    String output = name + "'s Dice: " + hand;
+    String output = name + "'s Score: " + scorecard.tallyUpScore();
     return output;
   }
 }

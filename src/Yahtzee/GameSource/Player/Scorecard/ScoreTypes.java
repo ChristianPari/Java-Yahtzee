@@ -8,7 +8,6 @@ public enum ScoreTypes {
   Fives,
   Sixes,
   TotalFacesScore,
-  Bonus,
   ToaK,
   FoaK,
   FullHouse,
@@ -16,5 +15,6 @@ public enum ScoreTypes {
   LgStraight,
   Yahtzee,
   Chance,
-  YahtzeeBonus
+  YahtzeeBonus,
+  GrandTotal
 }

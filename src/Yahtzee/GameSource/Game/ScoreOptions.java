@@ -18,6 +18,12 @@ public abstract class ScoreOptions {
       occurrences.put(val, occur);
     }
 
+    List<String> notIncluded = Arrays.asList("TotalFacesScore", "Bonus", "GrandTotal", "YahtzeeBonus");
+    for (ScoreTypes st : ScoreTypes.values()) {
+      if (!notIncluded.contains(st.toString()) && playerSC.isAvailable(st))
+        choices.put(st, 0);
+    }
+
     int score = 0; // total for Chance, 3 of a Kind and 4 of a Kind
     for (int die : occurrences.keySet()) {
       score += (die * occurrences.get(die));
@@ -33,12 +39,15 @@ public abstract class ScoreOptions {
         choices.put(ScoreTypes.YahtzeeBonus, 100);
 
     } else if (occurrences.size() == 2) { // must have a 4 of a Kind, 3 of a kind, or Full House
-      if (occurrences.containsValue(4) && playerSC.isAvailable(ScoreTypes.FoaK))
-        choices.put(ScoreTypes.FoaK, score);
-      else if (occurrences.containsValue(3)) {
+      if (occurrences.containsValue(4)) {
+        if (playerSC.isAvailable(ScoreTypes.FoaK))
+          choices.put(ScoreTypes.FoaK, score);
         if (playerSC.isAvailable(ScoreTypes.ToaK))
           choices.put(ScoreTypes.ToaK, score);
-        else if (playerSC.isAvailable(ScoreTypes.FullHouse))
+      } else if (occurrences.containsValue(3)) {
+        if (playerSC.isAvailable(ScoreTypes.ToaK))
+          choices.put(ScoreTypes.ToaK, score);
+        if (playerSC.isAvailable(ScoreTypes.FullHouse))
           choices.put(ScoreTypes.FullHouse, 25);
       }
 
@@ -60,10 +69,11 @@ public abstract class ScoreOptions {
         }
       }
 
-      if (consecutive == 4 && playerSC.isAvailable(ScoreTypes.SmStraight))
-        choices.put(ScoreTypes.SmStraight, 30);
-      if (consecutive == 5 && playerSC.isAvailable(ScoreTypes.LgStraight))
+      if (consecutive == 5 && playerSC.isAvailable(ScoreTypes.LgStraight)) {
         choices.put(ScoreTypes.LgStraight, 40);
+        choices.put(ScoreTypes.SmStraight, 30);
+      } else if (consecutive == 4 && playerSC.isAvailable(ScoreTypes.SmStraight))
+        choices.put(ScoreTypes.SmStraight, 30);
     }
 
     for (int die : occurrences.keySet()) { // individual value scores

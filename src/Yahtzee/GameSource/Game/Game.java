@@ -25,13 +25,14 @@ public class Game {
       round();
     }
 
+    announceWinner();
     displayScores();
   }
 
   private void round() {
     currentRound++;
 
-    System.out.println(currentRound == 13 ? "[FINAL ROUND]" : "\nRound " + currentRound);
+    System.out.println(currentRound == 13 ? "\n[FINAL ROUND]" : "\nRound " + currentRound);
 
     for (var player : players) {
       System.out.println("\n" + player.getName() + "'s turn...");
@@ -58,10 +59,21 @@ public class Game {
     String separator = Console.separator(headerLength);
     System.out.println(header);
 
-    for (var player : players) {
+    for (var player : players)
       System.out.println(player);
-    }
 
     System.out.println(separator);
+  }
+
+  private void announceWinner() {
+    System.out.println("\n[THE WINNER IS...]");
+
+    Player winner = players.get(0);
+    for (var player : players) {
+      if (player.scorecard.tallyUpScore() > winner.scorecard.tallyUpScore())
+        winner = player;
+    }
+
+    System.out.println(winner.getName());
   }
 }

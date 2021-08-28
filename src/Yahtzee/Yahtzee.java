@@ -1,6 +1,6 @@
 package Yahtzee;
 
-import Yahtzee.UserInterface.Menu;
+import Yahtzee.UserInterface.YahtzeeMenu;
 
 public class Yahtzee {
 
@@ -9,7 +9,7 @@ public class Yahtzee {
   }
 
   private void initializeGame() {
-    Menu.welcome();
-    Menu.mainMenu();
+    YahtzeeMenu.welcome();
+    YahtzeeMenu.mainMenu();
   }
 }

@@ -6,8 +6,8 @@ import Yahtzee.GameSource.Player.Scorecard.Scorecard;
 
 import java.util.*;
 
-public abstract class ScoreOptions {
-  public static Map<ScoreTypes, Integer> scoreChoices(List<Die> dieList, Scorecard playerSC) {
+public abstract class ScoreOptionsGenerator {
+  public static Map<ScoreTypes, Integer> generate(List<Die> dieList, Scorecard playerSC) {
     Map<ScoreTypes, Integer> choices = new HashMap<>();
     Map<Integer, Integer> occurrences = new HashMap<>();
     for (Die d : dieList) {

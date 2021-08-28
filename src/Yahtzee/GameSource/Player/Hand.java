@@ -6,19 +6,17 @@ import java.util.Random;
 
 public class Hand {
   // variables
-  private int numberOfDice = 5;
-  private int sidesOfDie = 6;
   public List<Die> dice = new ArrayList<>();
 
   // constructors
-  public Hand() {
-    generateDice();
+  public Hand(int numberOfDice, int sidesOfDie) {
+    generateDice(numberOfDice, sidesOfDie);
   }
 
   // methods
-  private void generateDice() {
+  private void generateDice(int numberOfDice, int sidesOfDie) {
     for (int count = 0; count < numberOfDice; count++) {
-      dice.add(new Die());
+      dice.add(new Die(sidesOfDie));
     }
   }
 

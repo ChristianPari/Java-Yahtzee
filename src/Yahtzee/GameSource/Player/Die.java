@@ -1,17 +1,13 @@
 package Yahtzee.GameSource.Player;
 
-import Yahtzee.Yahtzee;
-
 import java.util.Random;
 
 public class Die {
   // variables
-  private int sides = 6;
+  private final int sides;
   private int dieValue = 0;
-  public boolean isHeld = false;
 
   // constructors
-  public Die() {}
   public Die(int sides) { this.sides = sides; }
 
   // methods

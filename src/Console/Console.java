@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class Console {
+public abstract class Console {
   // variables
   static private Scanner scanner = new Scanner(System.in);
 

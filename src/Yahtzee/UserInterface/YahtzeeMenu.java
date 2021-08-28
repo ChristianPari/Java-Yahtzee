@@ -1,9 +1,10 @@
 package Yahtzee.UserInterface;
 
 import Console.Console;
-import Yahtzee.GameSource.Game.GameSetup;
+import Yahtzee.GameSource.Game.Setup.DiceGameSetup;
+import Yahtzee.GameSource.Game.Setup.YahtzeeGameSetup;
 
-public class Menu {
+public abstract class YahtzeeMenu {
   public static void welcome() {
     System.out.println("Welcome to Yahtzee!");
     System.out.println("* Each user has 13 rounds of up to 3 rolls to achieve the highest point total by completing 'Score Objectives'");
@@ -32,7 +33,7 @@ public class Menu {
       return;
     }
 
-    var gameSetup = new GameSetup();
-    gameSetup.startGame();
+    DiceGameSetup dgs = new YahtzeeGameSetup();
+    dgs.startGame();
   }
 }

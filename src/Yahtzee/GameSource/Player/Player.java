@@ -1,7 +1,7 @@
 package Yahtzee.GameSource.Player;
 
 import Console.Console;
-import Yahtzee.GameSource.Game.ScoreOptions;
+import Yahtzee.GameSource.Game.ScoreOptionsGenerator;
 import Yahtzee.GameSource.Player.Scorecard.ScoreTypes;
 import Yahtzee.GameSource.Player.Scorecard.Scorecard;
 
@@ -15,14 +15,16 @@ public class Player {
   private Random random;
   private String name;
   private String playerNumber;
-  public Hand hand = new Hand();
+  public Hand hand;
   private int rolls = 0;
   public Scorecard scorecard = new Scorecard();
 
   // constructors
   public Player(
           Random random,
-          String playerNumber
+          String playerNumber,
+          int numberOfDice,
+          int sidesOfDice
   ) {
     this.playerNumber = "Player " + playerNumber;
     this.name = Console.getString(
@@ -30,6 +32,7 @@ public class Player {
             "Name: "
     );
     this.random = random;
+    this.hand = new Hand(numberOfDice, sidesOfDice);
   }
 
   // methods
@@ -58,7 +61,7 @@ public class Player {
 
         } else {
           rolls = 4;
-          pickScore(ScoreOptions.scoreChoices(hand.dice, scorecard));
+          pickScore(ScoreOptionsGenerator.generate(hand.dice, scorecard));
         }
       }
     }

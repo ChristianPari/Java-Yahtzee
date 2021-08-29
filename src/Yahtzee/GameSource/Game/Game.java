@@ -55,14 +55,12 @@ public class Game {
 
   private void displayScores() {
     String header = "\n[SCORES]";
-    int headerLength = header.length();
-    String separator = Console.separator(headerLength);
     System.out.println(header);
 
-    for (var player : players)
+    for (var player : players) {
       System.out.println(player);
-
-    System.out.println(separator);
+      System.out.println(player.scorecard.displayScorecard());
+    }
   }
 
   private void announceWinner() {

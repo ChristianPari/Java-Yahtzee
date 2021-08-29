@@ -77,7 +77,7 @@ public class Player {
 
   private void roll(List<Integer> dieNumbers) {
     hand.roll(random, dieNumbers);
-    System.out.println("\n[ROLLED] " + hand);
+    System.out.println("\n[ROLLED]\n" + hand);
     rolls++;
   }
 

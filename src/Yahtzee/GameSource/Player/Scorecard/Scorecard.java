@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public class Scorecard {
   // fields
-  private Map<ScoreTypes, Integer> scorecard = new HashMap<>();
+  private Map<ScoreTypes, Integer> scorecard = new TreeMap<>();
 
   // constructor
   public Scorecard() {
@@ -55,8 +55,10 @@ public class Scorecard {
         continue;
       }
 
-      if (str.equals("TotalFacesScore") && scorecard.get(st) >= 63) {
-        scorecard.put(ScoreTypes.GrandTotal, grandT + 35);
+      if (str.equals("TotalFacesScore")) {
+        if (scorecard.get(st) >= 63) {
+          scorecard.put(ScoreTypes.GrandTotal, grandT + 35);
+        }
         continue;
       }
 
@@ -66,11 +68,33 @@ public class Scorecard {
     return scorecard.get(ScoreTypes.GrandTotal);
   }
 
+  public String displayScorecard() {
+    String output = "[SCORECARD]\n";
+    for (ScoreTypes sc : scorecard.keySet()) {
+
+      String scStr = sc.toString();
+      int score = scorecard.get(sc) == null ? 0 : scorecard.get(sc);
+
+      if (scStr.equals("TotalFacesScore")) {
+        if (score >= 63) {
+          scStr = "TotalFacesScoreBonus";
+          score = 35;
+        } else {
+          continue;
+        }
+      }
+
+      output += scStr + ": " + score + "\n";
+    }
+
+    return output;
+  }
+
   @Override
   public String toString() {
     String output = "\nFields that are currently empty...\n";
     ScoreTypes[] scores = ScoreTypes.values();
-    List<String> notIncluded = Arrays.asList("TotalFacesScore", "Bonus", "GrandTotal", "YahtzeeBonus");
+    List<String> notIncluded = Arrays.asList("TotalFacesScore", "GrandTotal", "YahtzeeBonus");
 
     for (ScoreTypes sc : scores) {
       if (!notIncluded.contains(sc.toString()) && scorecard.get(sc) == null)

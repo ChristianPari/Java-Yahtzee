@@ -8,7 +8,7 @@ import java.util.*;
 
 public abstract class ScoreOptionsGenerator {
   public static Map<ScoreTypes, Integer> generate(List<Die> dieList, Scorecard playerSC) {
-    Map<ScoreTypes, Integer> choices = new HashMap<>();
+    Map<ScoreTypes, Integer> choices = new TreeMap<>();
     Map<Integer, Integer> occurrences = new HashMap<>();
     for (Die d : dieList) {
       int val = d.getValue();
@@ -25,8 +25,17 @@ public abstract class ScoreOptionsGenerator {
     }
 
     int score = 0; // total for Chance, 3 of a Kind and 4 of a Kind
-    for (int die : occurrences.keySet()) {
-      score += (die * occurrences.get(die));
+
+    for (int die : occurrences.keySet()) { // individual value scores
+      int curDieTot = occurrences.get(die);
+      score += (die * curDieTot);
+      for (ScoreTypes st : ScoreTypes.values()) {
+        if (st.ordinal() + 1 == die) {
+          if (playerSC.isAvailable(st))
+            choices.put(st, (die * curDieTot));
+          break;
+        }
+      }
     }
 
     if (playerSC.isAvailable(ScoreTypes.Chance))
@@ -71,19 +80,10 @@ public abstract class ScoreOptionsGenerator {
 
       if (consecutive == 5 && playerSC.isAvailable(ScoreTypes.LgStraight)) {
         choices.put(ScoreTypes.LgStraight, 40);
-        choices.put(ScoreTypes.SmStraight, 30);
+        if (playerSC.isAvailable(ScoreTypes.SmStraight))
+          choices.put(ScoreTypes.SmStraight, 30);
       } else if (consecutive == 4 && playerSC.isAvailable(ScoreTypes.SmStraight))
         choices.put(ScoreTypes.SmStraight, 30);
-    }
-
-    for (int die : occurrences.keySet()) { // individual value scores
-      for (ScoreTypes st : ScoreTypes.values()) {
-        if (st.ordinal() + 1 == die) {
-          if (playerSC.isAvailable(st))
-            choices.put(st, (die * occurrences.get(die)));
-          break;
-        }
-      }
     }
 
     return choices;

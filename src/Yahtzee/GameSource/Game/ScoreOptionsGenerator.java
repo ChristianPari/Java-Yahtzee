@@ -6,6 +6,12 @@ import Yahtzee.GameSource.Player.Scorecard.Scorecard;
 
 import java.util.*;
 
+/*
+  This method uses Die from the dieList to find any possible scoring
+  options that the player has available on their scorecard "playerSC".
+  Then creates a Map storing ScoreType and that ScoreTypes' Points to
+  display to the user during their turn.
+*/
 public abstract class ScoreOptionsGenerator {
   public static Map<ScoreTypes, Integer> generate(List<Die> dieList, Scorecard playerSC) {
     Map<ScoreTypes, Integer> choices = new TreeMap<>();

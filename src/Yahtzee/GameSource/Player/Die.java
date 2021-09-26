@@ -2,6 +2,10 @@ package Yahtzee.GameSource.Player;
 
 import java.util.Random;
 
+/*
+  Dynamic Die class that could be used in any
+  program that needs a Die class
+*/
 public class Die {
   // variables
   private final int sides;

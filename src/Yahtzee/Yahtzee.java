@@ -9,7 +9,7 @@ public class Yahtzee {
   }
 
   private void initializeGame() {
-    YahtzeeMenu.welcome();
-    YahtzeeMenu.mainMenu();
+    YahtzeeMenu.welcome(); // Welcome message to users
+    YahtzeeMenu.mainMenu(); // Beginning prompt for users
   }
 }

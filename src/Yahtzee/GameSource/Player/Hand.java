@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/*
+  Dynamic Hand class that could be used in any
+  dice game program
+*/
 public class Hand {
   // variables
   public List<Die> dice = new ArrayList<>();

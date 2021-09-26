@@ -7,9 +7,13 @@ import java.util.Scanner;
 
 public abstract class Console {
   // variables
-  static private Scanner scanner = new Scanner(System.in);
+  static private Scanner scanner = new Scanner(System.in); // Single Scanner instance being used throughout application
 
   // methods
+  /*
+    Each of the following methods receive responses from the users in the CLI
+    and returns the data into the program where necessary / where the methods were used and needed
+  */
   public static List<Integer> getListIntegers(
       String prompt,
       String inputStarter,

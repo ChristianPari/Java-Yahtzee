@@ -8,17 +8,17 @@ import java.util.List;
 public class Game {
   // variables
   private final int MAX_ROUNDS = 13;
-  private List<Player> players;
-  private int currentRound;
+  private List<Player> players; // In game players
+  private int currentRound; // Tracks the current round
 
   // constructors
-  public Game(List<Player> players) {
+  public Game(List<Player> players) { // Players created during game setup and assigned here
     this.players = players;
     currentRound = 0;
   }
 
   // methods
-  public void play() {
+  public void play() { // Initiates the game, round by round
     displayPlayers();
 
     while (currentRound < MAX_ROUNDS) {
@@ -29,7 +29,7 @@ public class Game {
     displayScores();
   }
 
-  private void round() {
+  private void round() { // Round play through
     currentRound++;
 
     System.out.println(currentRound == 13 ? "\n[FINAL ROUND]" : "\nRound " + currentRound);

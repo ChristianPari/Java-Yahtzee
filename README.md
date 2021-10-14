@@ -1,5 +1,5 @@
 # Yahtzee CLI Program
-I decided to expand upon a school assigned challenge to create a simple 'dice rolling' game that a user could use to play any game that utilized dice if they didn't have dice of their own. There was no score detection or further Yahtzee-esk functionallity so I took it upon myself to create a fully functioning Yahtzee game with CLI interface. 
+This project was orignally created to be used as a simple dice rolling program that can be used by someone wanting to roll random die values with a user specified number of die with a user specified number of sides. Mostly being used for the game of Yahtzee, I challenged myself to expand and develope an efficient and effective program that could be a fully capable CLI Yahtzee game allowing for multiplayers, as well as player score tracking and display similar to that of a Yahtzee scorecard. 
 
 ## Getting Started
 ### `Download`

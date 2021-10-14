@@ -4,7 +4,7 @@ This project was orignally created to be used as a simple dice rolling program t
 ## Getting Started
 ### `Download`
 [`Yahtezee JAR File Download`](https://github.com/ChristianPari/Java-Yahtzee/raw/main/Quick_Install/Yahtzee.jar)<br>
-  - Click `Leave Page` when prompted, it will not redirect you
+  - Click `Leave Page` if prompted, it will not redirect you
 ### `Run`
 Open terminal to the directory you stored the JAR file and run `java -jar Yahtzee.jar`
 
